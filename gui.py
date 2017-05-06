@@ -26,6 +26,7 @@ import os
 from flask import Flask, render_template, request
 import urllib, json
 import requests
+
 app = Flask (__name__)
 
 @app.route("/")
@@ -37,7 +38,8 @@ def index():
 def sentiment_analysis():
 	# Se obtienen los parámetros que nos permitirán realizar la consulta
 	title = request.args.get("t")
-	url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
+	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
+	url_omdb = urllib.urlopen("http://localhost:8084/api/v1/information?t=" + title)
 	# Se lee la respuesta de OMDB
 	json_omdb = url_omdb.read()
 	# Se convierte en un JSON la respuesta leída
@@ -47,7 +49,21 @@ def sentiment_analysis():
 	json_result['omdb'] = omdb
 	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
 	return render_template("status.html", result=json_result)
-	
+
+@app.route("/tweets", methods=['GET'])
+def tweets_analysis():
+	# Se obtienen los parámetros que nos permitirán realizar la consulta
+	title = request.args.get("t")
+	url_search = urllib.urlopen("http://localhost:8085/api/v1/tweets?t=" + title)
+	# Se lee la respuesta de OMDB
+	json_search = url_search.read()
+	# Se convierte en un JSON la respuesta leída
+	search = json.loads(json_search)
+	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
+	json_result = {}
+	json_result['search'] = search
+	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
+	return render_template("tweets.html", result=json_result)
 
 if __name__ == '__main__':
 	# Se define el puerto del sistema operativo que utilizará el Sistema de Procesamiento de Comentarios (SPC).
