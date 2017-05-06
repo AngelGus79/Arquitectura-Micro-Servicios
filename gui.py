@@ -61,7 +61,7 @@ def tweets_analysis():
 	search = json.loads(json_search)
 	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
 	json_result = {}
-	json_result['search'] = search
+	json_result = search['statuses']
 	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
 	return render_template("tweets.html", result=json_result)
 
