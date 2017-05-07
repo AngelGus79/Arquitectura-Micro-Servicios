@@ -47,6 +47,9 @@ def movie_information():
 	for var in json_result['tweets']:
 		text.append(var['text'])
 	json_result['text']=text
+
+        json_result['sentiment'] = sentiment_analysis(text)
+        print (json_result['sentiment'])
 	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
 	return render_template("status.html", result=json_result)
 
@@ -61,16 +64,18 @@ def omdb_information(title):
 	# Regresa el JSON a el método principal
 	return omdb
 
-def sentiment_analysis(title):
+def sentiment_analysis(comments):
 	
 	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
-	url_omdb = urllib.urlopen("http://localhost:8086/api/v1/information?t=" + title)
+	url_sentiment = requests.post("http://localhost:8086/api/v1/sentiment", json={'comments': comments})
 	# Se lee la respuesta de OMDB
-	json_omdb = url_omdb.read()
+	#sentiment = url_sentiment.json()
 	# Se convierte en un JSON la respuesta leída
-	omdb = json.loads(json_omdb)
+	sentiment = url_sentiment.json()
 	# Regresa el JSON a el método principal
-	return omdb
+        
+        
+	return sentiment
 
 def tweets_information(title):
 	# Se obtienen los parámetros que nos permitirán realizar la consulta
