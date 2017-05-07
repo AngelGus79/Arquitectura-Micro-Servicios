@@ -87,13 +87,26 @@
 
         </div>
         <br>
+        {% for tweet in result.tweets %}
+        <div class="row">
+            <div class="col-md-2">
+                <img src="{{ tweet.user.profile_image_url}}" width=\"25px\" height=\"25px\" />
+            </div>
+            <div class="col-md-2">
+                {{ tweet.user.name}}
+            </div>
+            
+        </div>
         <div class="row">
 
+            
             <div class="col-md-12">
-                {{ result.text}}
+                {{ tweet.text}}
             </div>
 
         </div>
+        {% endfor %}
+        
     </div>
     <!-- /.container -->
 
