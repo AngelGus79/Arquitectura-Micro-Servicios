@@ -41,11 +41,14 @@
             <a href="#data_analysis" class="btn btn-dark btn-lg">View result</a>
         </div>
     </header>
-
     <!-- Page Content -->
     <div class="container">
-
-        {{ result[0].text }}
+        {% for tweet in result %}
+        <blockquote class="twitter-tweet" data-lang="es">
+        <a href="https://twitter.com/{{ tweet.user.screen_name }}/status/{{ tweet.id }}/"></a>
+        </blockquote>
+        {% endfor %}
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
         <!-- /.row -->
     </div>
     <!-- /.container -->
