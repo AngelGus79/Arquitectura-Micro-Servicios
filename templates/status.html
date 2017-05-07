@@ -78,37 +78,6 @@
             </div>
 
         </div>
-        <!-- /.row -->
-        <div class="row">
-
-            <div class="col-md-12">
-                {{ result.tweets}}
-            </div>
-
-        </div>
-        <br>
-        {% for tweet in result.tweets %}
-        <div class="row">
-            <div class="col-md-2">
-                <img src="{{ tweet.user.profile_image_url}}" width=\"25px\" height=\"25px\" />
-            </div>
-            <div class="col-md-2">
-                {{ tweet.user.name}}
-            </div>
-            
-        </div>
-        <div class="row">
-
-            
-            <div class="col-md-12">
-                {{ tweet.text}}
-            </div>
-
-        </div>
-        {% endfor %}
-        
-    </div>
-    <!-- /.container -->
 
     <!-- About -->
     <section id="about" class="about">
@@ -123,6 +92,29 @@
         </div>
         <!-- /.container -->
     </section>
+
+    <!-- Tweets -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Tweets About
+                </h1>
+            </div>
+        </div>
+        <div class='scroll'>
+        {% for tweet in result.tweets %}
+        <div class="row">
+            <div class="col-md-8">
+                <blockquote class="twitter-tweet" data-lang="es">
+                    <a href="https://twitter.com/{{ tweet.user.screen_name }}/status/{{ tweet.id }}/"></a>
+                </blockquote>
+            </div>
+        </div>
+        {% endfor %}
+        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+    </div>
+    <!-- /.container -->
 
     <!-- Result -->
     <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
