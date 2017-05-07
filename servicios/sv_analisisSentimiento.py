@@ -30,7 +30,8 @@ import os
 from flask import Flask, abort, render_template, request
 import urllib, json
 import oauth2
-import settings_tweets
+import settings_analisisSentimiento
+
 app = Flask (__name__)
 
 
@@ -42,23 +43,22 @@ def get_information():
 	# Se verifica si el parámetro no esta vacío 
 	if title is not None:
 		# Se conecta con el servicio de IMDb a través de su API
-
-		search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd',settings_tweets.ACCESS_TOKEN, settings_tweets.ACCESS_TOKEN_SECRET)
+		search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd', '860946611140046848-x7ZpSoxnhOziZls575hbEaq8ZMQ5G72', '7iHCpSyp50IcoB5Wdhr3McYZtzJShpaa62qXj0aDjEWCP' )	
 		# Se lee la respuesta de IMDb
-		#json_search = url_search.read()
+		#json_omdb = url_omdb.read()
 		# Se convierte en un JSON la respuesta recibida
-		search = json.loads(url_search)
+		#omdb = json.loads(json_omdb)
 		# Se regresa el JSON de la respuesta
-		return json.dumps(search)
+		return search
 	else:
 		# Se devuelve un error 400 para indicar que el servicio no puede funcionar sin parámetro
 		abort(400)
 
 def oauth_req(url, key, secret, http_method='GET', post_body='', http_headers=None):
-    consumer = oauth2.Consumer(key=settings_tweets.CONSUMER_KEY, secret=settings_tweets.CONSUMER_SECRET)
+    consumer = oauth2.Consumer(key=CONSUMER_KEY, secret=CONSUMER_SECRET)
     token = oauth2.Token(key=key, secret=secret)
     client = oauth2.Client(consumer, token)
-    resp, content = client.request(url, method=http_method, body=post_body, headers=http_headers )
+    resp, content = client.request( url, method=http_method, body=post_body, headers=http_headers )
     return content
 
 if __name__ == '__main__':
