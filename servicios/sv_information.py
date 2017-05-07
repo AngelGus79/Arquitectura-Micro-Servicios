@@ -4,7 +4,8 @@
 # Archivo: sv_information.py
 # Tarea: 2 Arquitecturas Micro Servicios.
 # Autor(es): Perla Velasco & Yonathan Mtz.
-# Version: 1.2 Abril 2017
+# Modificada por: Miles Durón, Saúl Ibarra, Angel, Antonio Ibarra, Jesús Montalvo
+# Version: 2.0 Mayo 2017
 # Descripción:
 #
 #   Este archivo define el rol de un servicio. Su función general es porporcionar en un objeto JSON
