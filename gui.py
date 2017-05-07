@@ -4,7 +4,8 @@
 # Archivo: gui.py
 # Tarea: 2 Arquitecturas Micro Servicios.
 # Autor(es): Perla Velasco & Yonathan Mtz.
-# Version: 1.2 Abril 2017
+# Modificada por: Miles Durón, Saúl Ibarra, Angel, Antonio Ibarra, Jesús Montalvo
+# Version: 2.0 Mayo 2017
 # Descripción:
 #
 #   Este archivo define la interfaz gráfica del usuario. Recibe dos parámetros que posteriormente son enviados
@@ -38,31 +39,30 @@ def index():
 def movie_information():
 	# Se obtienen los parámetros que nos permitirán realizar la consulta
 	title = request.args.get("t")
-	
 	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
 	json_result = {}
+	# Se pasa el titulo al método que consume el servicio de OMDB
 	json_result['omdb'] = omdb_information(title)
+	# Se pasa el titulo y el tipo de contenido al método que consume el servicio de Twitter
 	json_result['tweets'] = tweets_information(title,json_result['omdb']['Type'])
 	text=[]
 	for var in json_result['tweets']:
 		text.append(var['text'])
 	json_result['text']=text
-	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
+	# Regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
 	return render_template("status.html", result=json_result)
 
 def omdb_information(title):
-	
-	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
+	#Se envía el titulo al servicio que obtiene información de OMDB
 	url_omdb = urllib.urlopen("http://localhost:8084/api/v1/information?t=" + title)
 	# Se lee la respuesta de OMDB
 	json_omdb = url_omdb.read()
 	# Se convierte en un JSON la respuesta leída
 	omdb = json.loads(json_omdb)
-	# Regresa el JSON a el método principal
+	# Regresa el JSON al método principal
 	return omdb
 
 def sentiment_analysis(title):
-	
 	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
 	url_omdb = urllib.urlopen("http://localhost:8086/api/v1/information?t=" + title)
 	# Se lee la respuesta de OMDB
@@ -73,14 +73,13 @@ def sentiment_analysis(title):
 	return omdb
 
 def tweets_information(title,content_type):
-	# Se obtienen los parámetros que nos permitirán realizar la consulta
-	title = request.args.get("t")
+	#Se envía el titulo y el tipo de contenido al servicio que obtiene información de Twitter
 	url_search = urllib.urlopen("http://localhost:8085/api/v1/tweets?t=" + title + " " + content_type)
-	# Se lee la respuesta de OMDB
+	# Se lee la respuesta de Twitter
 	json_search = url_search.read()
 	# Se convierte en un JSON la respuesta leída
 	search = json.loads(json_search)
-	# Regresa solo la parte del JSON donde se almacena la informacion del tweet
+	# Regresa solo la parte del JSON donde se almacena la informacion de los tweets
 	return search['statuses']
 
 if __name__ == '__main__':

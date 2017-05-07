@@ -1,30 +1,33 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 #----------------------------------------------------------------------------------------------------------------
-# Archivo: sv_information.py
+# Archivo: sv_tweets.py
 # Tarea: 2 Arquitecturas Micro Servicios.
 # Autor(es): Perla Velasco & Yonathan Mtz.
-# Version: 1.2 Abril 2017
+# Modificada por: Miles Durón, Saúl Ibarra, Angel, Antonio Ibarra, Jesús Montalvo
+# Version: 2.0 Mayo 2017
 # Descripción:
 #
 #   Este archivo define el rol de un servicio. Su función general es porporcionar en un objeto JSON
-#   información detallada acerca de una pelicula o una serie en particular haciendo uso del API proporcionada
-#   por IMDb ('https://www.imdb.com/').
+#   información detallada acerca de los comentarios acerca de una pelicula o una serie en particular en la plataforma Twitter haciendo uso de su API
+#   ('https://www.twitter.com/').
 #   
 #   
 #
-#                                        sv_information.py
-#           +-----------------------+-------------------------+------------------------+
-#           |  Nombre del elemento  |     Responsabilidad     |      Propiedades       |
-#           +-----------------------+-------------------------+------------------------+
-#           |                       |  - Ofrecer un JSON que  | - Utiliza el API de    |
-#           |    Procesador de      |    contenga información |   IMDb.                |
-#           |     comentarios       |    detallada de pelí-   | - Devuelve un JSON con |
-#           |       de IMDb         |    culas o series en    |   datos de la serie o  |
-#           |                       |    particular.          |   pelicula en cuestión.|
-#           +-----------------------+-------------------------+------------------------+
+#                                        sv_tweets.py
+#           +-----------------------+-------------------------+----------------------------+
+#           |  Nombre del elemento  |     Responsabilidad     |      Propiedades           |
+#           +-----------------------+-------------------------+----------------------------+
+#           |                       |  - Ofrecer un JSON que  | - Utiliza el API de        |
+#           |    Procesador de      | contenga información    |   Twitter                  | 
+#           |    comentarios        | detallada de los        | - Devuelve un JSON con     |
+#           |     en Twitter        | comentarios acerca de   |   los tweets y comentarios |
+#           |                       | una pelicula o serie    |   mas recientes de la serie|
+#           |                       | en particular dentro de |   o pelicula en cuestión.  |
+#           |                       | la plataforma Twitter   |                            |
+#           +-----------------------+-------------------------+----------------------------+
 #
-#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8084/api/v1/information?t=matrix
+#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8085/api/v1/tweets?t=matrix movie
 #
 import os
 from flask import Flask, abort, render_template, request
@@ -36,16 +39,13 @@ app = Flask (__name__)
 
 @app.route("/api/v1/tweets")
 def get_information():
-	# Método que obtiene la información de IMDB acerca de un título en particular
-	# Se lee el parámetro 't' que contiene el título de la película o serie que se va a consultar
+	# Método que obtiene la información de Twitter acerca de un título en particular
+	# Se lee el parámetro 't' que contiene el título de la película o serie que se va a buscar
 	title = request.args.get("t")
 	# Se verifica si el parámetro no esta vacío 
 	if title is not None:
-		# Se conecta con el servicio de IMDb a través de su API
-
-		url_search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd',settings_tweets.ACCESS_TOKEN, settings_tweets.ACCESS_TOKEN_SECRET)
-		# Se lee la respuesta de IMDb
-		#json_search = url_search.read()
+		# Se conecta con el servicio de Twitter a través de su API
+		url_search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd&count=1',settings_tweets.ACCESS_TOKEN, settings_tweets.ACCESS_TOKEN_SECRET)
 		# Se convierte en un JSON la respuesta recibida
 		search = json.loads(url_search)
 		# Se regresa el JSON de la respuesta

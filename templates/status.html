@@ -109,6 +109,7 @@
         <div class='row'>
             <div class="col-md-6 scroll">
                 {% for tweet in result.tweets %}
+                {{tweet}}
                 <div class="row">
                     <div class="col-md-12">
                         <blockquote class="twitter-tweet" data-lang="es">
@@ -118,6 +119,8 @@
                 </div>
                 {% endfor %}
             <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <div class="col-md-6 scroll">
             </div>
         </div>
     </div>
