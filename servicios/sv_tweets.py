@@ -43,7 +43,7 @@ def get_information():
 	if title is not None:
 		# Se conecta con el servicio de IMDb a través de su API
 
-		search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd',settings_tweets.ACCESS_TOKEN, settings_tweets.ACCESS_TOKEN_SECRET)
+		url_search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd',settings_tweets.ACCESS_TOKEN, settings_tweets.ACCESS_TOKEN_SECRET)
 		# Se lee la respuesta de IMDb
 		#json_search = url_search.read()
 		# Se convierte en un JSON la respuesta recibida
