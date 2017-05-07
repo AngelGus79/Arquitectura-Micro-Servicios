@@ -42,13 +42,14 @@ def get_information():
 	# Se verifica si el parámetro no esta vacío 
 	if title is not None:
 		# Se conecta con el servicio de IMDb a través de su API
+
 		search = oauth_req('https://api.twitter.com/1.1/search/tweets.json?q='+title+'&src=typd',settings_tweets.ACCESS_TOKEN, settings_tweets.ACCESS_TOKEN_SECRET)
 		# Se lee la respuesta de IMDb
-		#json_omdb = url_omdb.read()
+		#json_search = url_search.read()
 		# Se convierte en un JSON la respuesta recibida
-		#omdb = json.loads(json_omdb)
+		search = json.loads(url_search)
 		# Se regresa el JSON de la respuesta
-		return search
+		return json.dumps(search)
 	else:
 		# Se devuelve un error 400 para indicar que el servicio no puede funcionar sin parámetro
 		abort(400)

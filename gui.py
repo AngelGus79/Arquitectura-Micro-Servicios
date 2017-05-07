@@ -35,23 +35,44 @@ def index():
 	return render_template("index.html")
 
 @app.route("/information", methods=['GET'])
-def sentiment_analysis():
+def movie_information():
 	# Se obtienen los parámetros que nos permitirán realizar la consulta
 	title = request.args.get("t")
+	
+	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
+	json_result = {}
+	json_result['omdb'] = omdb_information(title)
+	json_result['tweets'] = tweets_information(title)
+	text=[]
+	for var in json_result['tweets']:
+		text.append(var['text'])
+	json_result['text']=text
+	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
+	return render_template("status.html", result=json_result)
+
+def omdb_information(title):
+	
 	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
 	url_omdb = urllib.urlopen("http://localhost:8084/api/v1/information?t=" + title)
 	# Se lee la respuesta de OMDB
 	json_omdb = url_omdb.read()
 	# Se convierte en un JSON la respuesta leída
 	omdb = json.loads(json_omdb)
-	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
-	json_result = {}
-	json_result['omdb'] = omdb
-	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
-	return render_template("status.html", result=json_result)
+	# Regresa el JSON a el método principal
+	return omdb
 
-@app.route("/tweets", methods=['GET'])
-def tweets_analysis():
+def sentiment_analysis(title):
+	
+	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
+	url_omdb = urllib.urlopen("http://localhost:8086/api/v1/information?t=" + title)
+	# Se lee la respuesta de OMDB
+	json_omdb = url_omdb.read()
+	# Se convierte en un JSON la respuesta leída
+	omdb = json.loads(json_omdb)
+	# Regresa el JSON a el método principal
+	return omdb
+
+def tweets_information(title):
 	# Se obtienen los parámetros que nos permitirán realizar la consulta
 	title = request.args.get("t")
 	url_search = urllib.urlopen("http://localhost:8085/api/v1/tweets?t=" + title)
@@ -59,11 +80,8 @@ def tweets_analysis():
 	json_search = url_search.read()
 	# Se convierte en un JSON la respuesta leída
 	search = json.loads(json_search)
-	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
-	json_result = {}
-	json_result['search'] = search
-	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
-	return render_template("tweets.html", result=json_result)
+	# Regresa solo la parte del JSON donde se almacena la informacion del tweet
+	return search['statuses']
 
 if __name__ == '__main__':
 	# Se define el puerto del sistema operativo que utilizará el Sistema de Procesamiento de Comentarios (SPC).
