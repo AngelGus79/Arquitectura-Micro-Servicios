@@ -42,7 +42,7 @@ def movie_information():
 	# Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
 	json_result = {}
 	json_result['omdb'] = omdb_information(title)
-	json_result['tweets'] = tweets_information(title)
+	json_result['tweets'] = tweets_information(title,json_result['omdb']['Type'])
 	text=[]
 	for var in json_result['tweets']:
 		text.append(var['text'])
@@ -72,10 +72,10 @@ def sentiment_analysis(title):
 	# Regresa el JSON a el método principal
 	return omdb
 
-def tweets_information(title):
+def tweets_information(title,content_type):
 	# Se obtienen los parámetros que nos permitirán realizar la consulta
 	title = request.args.get("t")
-	url_search = urllib.urlopen("http://localhost:8085/api/v1/tweets?t=" + title)
+	url_search = urllib.urlopen("http://localhost:8085/api/v1/tweets?t=" + title + " " + content_type)
 	# Se lee la respuesta de OMDB
 	json_search = url_search.read()
 	# Se convierte en un JSON la respuesta leída
