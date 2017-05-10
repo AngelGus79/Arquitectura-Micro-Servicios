@@ -26,53 +26,49 @@
 #
 #	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8084/api/v1/information?t=matrix
 #
+import os, urllib, json, oauth2, settings_analisisSentimiento, requests, sqlite3, sys
+sys.path.append(os.path.abspath('') + '/data')
+from Conexion import Conexion
 from flask import Flask, abort, render_template, request
-import os, urllib, json, oauth2, settings_analisisSentimiento, requests
-from twython import Twython
+
 
 app = Flask (__name__)
 
-@app.route("/api/v1/sentiment", methods=['POST'])
+@app.route("/api/v1/sentiment", methods=['GET'])
 def get_information():
-        comments = request.get_json()
-        
-        total = len(comments["comments"])
-        
-        if total > 0:
- 
-                pos = 0
-                neg = 0
-                neu = 0
-                                       
-                for c in comments["comments"]:
-                        endpoint = 'https://japerk-text-processing.p.mashape.com/sentiment/'
-                        headers = {
-                                 'X-Mashape-Key': settings_analisisSentimiento.MASHAPE_KEY,
-                                 }
-                        payload = {
-                                'language': 'english',
-                                'text': c,
-                        }
-                        response = requests.post(endpoint, headers=headers, data=payload)
-                        response = response.json()
+	title = request.args.get("t")
+	comments=''
+	try:
+		con = Conexion()
+		select=('SELECT distinct comment from Tweets')
+		con.connect()
+		comments=con.execute(select)
+		con.close()
+	except sqlite3.Error as error:
+		print 'An error occurred:', error.args[0]
+	total = len(comments)
+	if total > 0:
+		pos = 0
+		neg = 0
+		neu = 0            
+		for c in comments[0]:
+			print c
+			endpoint = 'https://japerk-text-processing.p.mashape.com/sentiment/'
+			headers = {'X-Mashape-Key': settings_analisisSentimiento.MASHAPE_KEY,}
+			payload = {'language': 'english','text': c,}
+			response = requests.post(endpoint, headers=headers, data=payload)
+			response = response.json()
 
-                        if response['label'] == "pos":
-                                pos += 1
-                        elif response['label'] == "neg":
-                                neg += 1
-                        else:
-                                neu += 1
+			if response['label'] == "pos":
+				pos += 1
+			elif response['label'] == "neg":
+				neg += 1
+			else:
+				neu += 1
 
-                statistic = {
-                        'pos': pos,
-                        'neg': neg,
-                        'neu': neu,
-                        'tot': total,
-                                }
-                
-                statistic = json.dumps(statistic, ensure_ascii=False)
-                return statistic
-
+		statistic = {'pos': pos,'neg': neg,'neu': neu,'tot': total,}
+		statistic = json.dumps(statistic, ensure_ascii=False)
+		return statistic
 	else:
 		# Se devuelve un error 400 para indicar que el servicio no puede funcionar sin parámetro
 		abort(400)

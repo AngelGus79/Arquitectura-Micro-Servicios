@@ -44,13 +44,15 @@ def movie_information():
 	# Se pasa el titulo al método que consume el servicio de OMDB
 	json_result['omdb'] = omdb_information(title)
 	# Se pasa el titulo y el tipo de contenido al método que consume el servicio de Twitter
-	json_result['tweets'] = tweets_information(title,json_result['omdb']['Type'])
-	text=[]
+	json_result['tweets'] = tweets_information(json_result['omdb']['Title'],json_result['omdb']['Type'])
+	store_tweets(json_result['tweets'])
+	"""text=[]
 	for var in json_result['tweets']:
 		text.append(var['text'])
-	json_result['text']=text
+	json_result['text']=text"""
         
-        json_result['sentiment'] = sentiment_analysis(text)
+	#json_result['sentiment'] = sentiment_analysis(text)
+	json_result['sentiment'] = sentiment_analysis(json_result['omdb']['Title'])
 
 	# Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
 	return render_template("status.html", result=json_result)
@@ -65,16 +67,15 @@ def omdb_information(title):
 	# Regresa el JSON al método principal
 	return omdb
 
-
-def sentiment_analysis(comments):
+def sentiment_analysis(title):
 	#url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
-	url_sentiment = requests.post("http://localhost:8086/api/v1/sentiment", json={'comments': comments})
-	# Se lee la respuesta de OMDB
-	#sentiment = url_sentiment.json()
+	#url_sentiment = requests.post("http://localhost:8086/api/v1/sentiment", json={'comments': comments})
+	url_sentiment = urllib.urlopen("http://localhost:8086/api/v1/sentiment?t=" + title)
+	# Se lee la respuesta de Twitter
+	json_sentiment = url_sentiment.read()
 	# Se convierte en un JSON la respuesta leída
-	sentiment = url_sentiment.json()
+	sentiment = json.loads(json_sentiment)
 	# Regresa el JSON a el método principal
-        
         
 	return sentiment
 
@@ -86,7 +87,17 @@ def tweets_information(title,content_type):
 	# Se convierte en un JSON la respuesta leída
 	search = json.loads(json_search)
 	# Regresa solo la parte del JSON donde se almacena la informacion de los tweets
-	return search['statuses']
+	return search['tweets']
+
+def store_tweets(tweets):
+	url_store= requests.post("http://localhost:8085/api/v1/tweets", json={'tweets': tweets})
+	# Se lee la respuesta de OMDB
+	store = url_store.json()
+	# Se convierte en un JSON la respuesta leída
+	#sentiment = url_sentiment.json()
+	# Regresa el JSON a el método principal
+        
+	return store
 
 if __name__ == '__main__':
 	# Se define el puerto del sistema operativo que utilizará el Sistema de Procesamiento de Comentarios (SPC).

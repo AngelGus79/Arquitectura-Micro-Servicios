@@ -109,18 +109,39 @@
         <div class='row'>
             <div class="col-md-6 scroll">
                 {% for tweet in result.tweets %}
-                {{tweet}}
                 <div class="row">
                     <div class="col-md-12">
                         <blockquote class="twitter-tweet" data-lang="es">
-                            <a href="https://twitter.com/{{ tweet.user.screen_name }}/status/{{ tweet.id }}/"></a>
+                            <a href="https://twitter.com/{{ tweet.screen_name }}/status/{{ tweet.id }}/"></a>
                         </blockquote>
                     </div>
                 </div>
                 {% endfor %}
             <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
-            <div class="col-md-6 scroll">
+
+
+
+            <div class="col-md-6">
+            <br>
+                <div class="featurette well">
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                            <p class="lead">
+                                <span class="text-muted"><span class="text-info">
+                                Comentarios Positivos: </span> {{result.sentiment.pos}}.
+                                <br>
+                                Comentarios Negativos: </span> {{result.sentiment.neg}}.
+                                <br>
+                                Comentarios Neutrales: </span> {{result.sentiment.neu}}.
+                                <br>
+                                Total de Comentarios Analizados: </span> {{result.sentiment.tot}}.</spam>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+               
             </div>
         </div>
     </div>
