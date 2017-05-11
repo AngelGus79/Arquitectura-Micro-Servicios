@@ -34,7 +34,7 @@ app = Flask (__name__)
 
 @app.route("/api/v1/information")
 def get_information():
-	# Método que obtiene la información de IMDB acerca de un título en particular
+        # Método que obtiene la información de IMDB acerca de un título en particular
 	# Se lee el parámetro 't' que contiene el título de la película o serie que se va a consultar
 	title = request.args.get("t")
 	# Se verifica si el parámetro no esta vacío 
