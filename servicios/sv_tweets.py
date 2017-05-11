@@ -70,7 +70,7 @@ def save_information(tweets):
         # Se verifica si hay tweets
         if tweets is not None:
                 # Conecta con la base de datos SQLite3
-                connection = sqlite3.connect("/data/database.sqlite")
+                connection = sqlite3.connect("data/database.sqlite")
                 # se crea el objeto cursor
                 cursor = connection.cursor()
                 # Se limpia la db de tweets previos
