@@ -1,16 +1,11 @@
 # Servicios
-En esta carpeta se define los servicios utilizados en la tarea 2 dentro del Sistema de Procesamiento de Comentarios (SPC). La especificación de los servicios se realizaron utilizando blueprint de Apiary.
-Las especificaciones es las siguientes:
+En esta carpeta se definen los servicios utilizados en la tarea 2 dentro del Sistema de Procesamiento de Comentarios (SPC). La especificación de los servicios se realizaron utilizando blueprint de Apiary.
+Las especificaciones son las siguientes:
 
 ## Procesador de Comentarios de IMDb
   
 FORMAT: 1A  
 HOST: https://uaz.cloud.tyk.io/content
-
-## Procesador de Tweets y Comentarios de Twitter
-
-FORMAT: 1A  
-HOST: 
 
 ## Information Service [/api/v1/information{?t}]
 
@@ -52,6 +47,10 @@ HOST:
             "message": "The browser (or proxy) sent a request that this server could not understand."
         }
         
+## Procesador de Tweets y Comentarios de Twitter
+
+FORMAT: 1A  
+HOST:         
 
 ## Twitter Service [/api/v1/tweets{?t}]
 
