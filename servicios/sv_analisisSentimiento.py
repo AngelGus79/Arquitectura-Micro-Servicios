@@ -35,7 +35,7 @@ app = Flask (__name__)
 @app.route("/api/v1/sentiment", methods=['GET'])
 def get_information():
         # Conecta con la base de datos SQLite3
-        connection = sqlite3.connect("../data/database.sqlite")
+        connection = sqlite3.connect("/data/database.sqlite")
         # creo el objeto cursor
         cursor = connection.cursor()
         # Recupera comentarios de la base de datos
