@@ -3,7 +3,7 @@
 #----------------------------------------------------------------------------------------------------------------
 # Archivo: sv_analisisSentimiento.py
 # Tarea: 2 Arquitecturas Micro Servicios.
-# Autor(es): Saul, Miles, Antonio, Jesus, Angel
+# Autor(es): Miles Durón, Saúl Ibarra, Angel Lázaro, Antonio Ibarra, Jesús Montalvo
 # Version: 1.2 Mayo 2017
 # Descripción:
 #
@@ -16,9 +16,9 @@
 #           +-----------------------+-------------------------+------------------------+
 #           |  Nombre del elemento  |     Responsabilidad     |      Propiedades       |
 #           +-----------------------+-------------------------+------------------------+
-#           |                       |  - Ofrecer un JSON que  | - Utiliza el API de    |
-#           |    Evaluador de       |    estadistica del      |   mashape de proce     |
-#           |     sentimiento       |    numero de comentarios|   samiento de texto    |
+#           |                       |  - Ofrecer un JSON con  | - Utiliza el API de    |
+#           |    Evaluador de       |    una estadística del  |   mashape de proce_    |
+#           |     sentimiento       |    número de comentarios|   samiento de texto.   |
 #           |      de tweets        |    positivos, negativos |                        |
 #           |                       |    neutros y total.     |                        |
 #           +-----------------------+-------------------------+------------------------+
@@ -42,10 +42,10 @@ def get_information():
         comments = cursor.execute('select text from Tweets')
         # checa si hay comentarios
 	if comments is not None:
-                # Se crean estadisticas sobre los sentimientos de los comentarios
+                # Se crean estadísticas sobre los sentimientos de los comentarios
 		statistic = createStatistic(comments)
 
-                # Cierra la conexion con la base de datos
+                # Cierra la conexión con la base de datos
                 connection.close()
 
                 # devuelve un json de la estadistica
@@ -72,7 +72,7 @@ def createStatistic(comments):
 	        else:
 	                neu += 1
                 total += 1
-        # crea un diccionario de las estadisticas de sentimiento de los comentarios
+        # crea un diccionario de las estadísticas de sentimiento de los comentarios
         statistic = {'pos': pos, 'neg': neg, 'neu': neu, 'tot': total, }
         
         return statistic

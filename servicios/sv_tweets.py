@@ -3,9 +3,8 @@
 #----------------------------------------------------------------------------------------------------------------
 # Archivo: sv_tweets.py
 # Tarea: 2 Arquitecturas Micro Servicios.
-# Autor(es): Perla Velasco & Yonathan Mtz.
-# Modificada por: Miles Durón, Saúl Ibarra, Angel, Antonio Ibarra, Jesús Montalvo
-# Version: 2.0 Mayo 2017
+# Autor(es): Miles Durón, Saúl Ibarra, Angel Lázaro, Antonio Ibarra, Jesús Montalvo
+# Version: 1.2 Mayo 2017
 # Descripción:
 #
 #   Este archivo define el rol de un servicio. Su función general es obtener informacion de comentarios de twitter y guardarlos en una base de datos.
@@ -21,8 +20,8 @@
 #           |    Procesador de      | de twitter en una bd    |   Twitter                  | 
 #           |    comentarios        |                         | - Guarda en una db         |
 #           |     en Twitter        |                         |   los tweets y comentarios |
-#           |                       |                         |   mas recientes de la serie|
-#           |                       |                         |   o pelicula en cuestión.  |
+#           |                       |                         |   más recientes de la serie|
+#           |                       |                         |   o película en cuestión.  |
 #           |                       |                         |                            |
 #           +-----------------------+-------------------------+----------------------------+
 #

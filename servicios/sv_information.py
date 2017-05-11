@@ -4,7 +4,7 @@
 # Archivo: sv_information.py
 # Tarea: 2 Arquitecturas Micro Servicios.
 # Autor(es): Perla Velasco & Yonathan Mtz.
-# Modificada por: Miles Durón, Saúl Ibarra, Angel, Antonio Ibarra, Jesús Montalvo
+# Modificada por: Miles Durón, Saúl Ibarra, Angel Lázaro, Antonio Ibarra, Jesús Montalvo
 # Version: 2.0 Mayo 2017
 # Descripción:
 #
@@ -22,7 +22,7 @@
 #           |    Procesador de      |    contenga información |   IMDb.                |
 #           |     comentarios       |    detallada de pelí-   | - Devuelve un JSON con |
 #           |       de IMDb         |    culas o series en    |   datos de la serie o  |
-#           |                       |    particular.          |   pelicula en cuestión.|
+#           |                       |    particular.          |   película en cuestión.|
 #           +-----------------------+-------------------------+------------------------+
 #
 #	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8084/api/v1/information?t=matrix
