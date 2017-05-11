@@ -17,10 +17,10 @@ HOST: https://uaz.cloud.tyk.io/content
 + Response 200 (application/json)
 
         { 
-            "Title": "Some text",
-            "Year": "Some text", 
-            "Rated": "Some text",
-            "Released": "Some text",
+            "neg": "Some text",
+            "neu": "Some text", 
+            "pos": "Some text",
+            "tot": "Some text",
             "Runtime": "Some text",
             "Genre": "Some text",
             "Director": "Some text",
@@ -46,7 +46,11 @@ HOST: https://uaz.cloud.tyk.io/content
             "title": "Bad Request"
             "message": "The browser (or proxy) sent a request that this server could not understand."
         }
-        
+
+Ejemplo de uso: 
+1. Abrir el navegador
+1. Ingresar a https://uaz.cloud.tyk.io/content/api/v1/information?t=Stranger+Things
+
 ## Procesador de Tweets y Comentarios de Twitter
 
 FORMAT: 1A  
@@ -175,6 +179,37 @@ HOST:
                     "message":"Bad Authentication data."
                 }
             ]
+        }
+        
+
+## Analizador de sentimiento
+
+FORMAT: 1A  
+HOST: localhost:8086         
+
+## Servicio de análisis de sentimiento [/api/v1/sentiment]
+
+Se obtiene el número de comentarios positivos, negativos, neutrales y total de la última película procesada por el procesador de tweets
+
++ Parameters
+    + Sin parámetros
+
+### Get Information [GET]
+
++ Response 200 (application/json)
+
+        { 
+            "neg": "Número de comentarios negativos",
+            "neu": "Número de comentarios neutrales", 
+            "pos": "Número de comentarios positivos",
+            "tot": "Total de comentarios procesados"
+        }
+
++ Response 400 (text)
+
+        {
+            "title": "Bad Request"
+            "message": "The browser (or proxy) sent a request that this server could not understand."
         }
 
 Ejemplo de uso: 
