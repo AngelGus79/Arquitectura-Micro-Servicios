@@ -23,7 +23,7 @@ Una vez instalados los prerrequisitos es momento de ejcutar el sistema siguiendo
 1. Ejecutar los servicios:  
    > python servicios/sv_information.py  
    > python servicios/sv_tweets.py  
-   > python servicios/sv_sentiment_analysis.py
+   > python servicios/sv_analisisSentimiento.py
 1. Ejecutar el GUI:  
    > python gui.py  
 1. Abrir el navegador
