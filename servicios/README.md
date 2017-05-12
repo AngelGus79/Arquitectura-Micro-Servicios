@@ -54,7 +54,7 @@ Ejemplo de uso:
 FORMAT: 1A  
 HOST: https://localhost:8085
 
-# Procesador de tweets
+# Procesador de comentarios en Twetter
 Se obtienen tweets a partir del título de una película y se guardan en la base de datos.
 
 ## Twitter Service [/api/v1/tweets{?t}]
@@ -81,9 +81,9 @@ Se obtienen tweets a partir del título de una película y se guardan en la base
 FORMAT: 1A  
 HOST: http://localhost:8086  
 
-# Analizador de sentimiento
+# Evaluador de sentimiento de tweets
 
-Se analiza el sentimiento de los comentarios guardados en la base de datos.
+Ofrecer un JSON con una estadística del número de comentarios positivos, negativos, neutros y total.
 
 
 
