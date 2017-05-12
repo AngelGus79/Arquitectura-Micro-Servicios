@@ -49,7 +49,7 @@ def get_information():
                 # Se persisten los Tweets en la base de datos
                 save_information(tweets['statuses'])
                 # Si todo sale bien se manda un codigo 204, para indicar que se realizo satisfactoriamente
-                return ('', 204)
+                return ('', 200)
         else:
                 # Se devuelve un error 400 para indicar que el servicio no puede funcionar sin parámetro
                 abort(400)
